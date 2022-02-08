@@ -1,0 +1,16 @@
+{
+  "language": "English",
+  "@language": {
+    "description": "The current language!"
+  },
+  "welcome": "Hello {name}",
+  "@welcome": {
+    "description": "Welcome message",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tapBackButtonAgainToExit": "Tap the back button again to exit the app!"
+}
