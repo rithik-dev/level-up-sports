@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:level_up_sports/screens/game_room_screen.dart';
 import 'package:level_up_sports/screens/home_screen.dart';
 import 'package:level_up_sports/screens/splash_screen.dart';
 import 'package:level_up_sports/utils/helpers.dart';
@@ -14,6 +15,8 @@ class RouteGenerator {
         return _route(const SplashScreen());
       case HomeScreen.id:
         return _route(const HomeScreen());
+      case GameRoomScreen.id:
+        return _route(const GameRoomScreen());
       default:
         return _errorRoute(settings.name);
     }

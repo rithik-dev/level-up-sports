@@ -25,9 +25,18 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
+    return SafeArea(
       child: Scaffold(
-        body: CustomLoader(),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(50),
+              child: Image.asset('assets/images/logo.png'),
+            ),
+            const CustomLoader(),
+          ],
+        ),
       ),
     );
   }

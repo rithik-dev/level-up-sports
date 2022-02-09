@@ -10,9 +10,6 @@ class L10n {
   static const all = [
     // English
     Locale('en'),
-
-    // Hindi
-    Locale('hi'),
   ];
 
   static List<LocalizationsDelegate> get localizationsDelegates =>
