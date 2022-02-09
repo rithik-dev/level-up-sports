@@ -12,6 +12,15 @@
       }
     }
   },
+  "winnerIs": "Winner is {winner}",
+  "@winnerIs": {
+    "description": "Winner declaration",
+    "placeholders": {
+      "winner": {
+        "type": "String"
+      }
+    }
+  },
   "tapBackButtonAgainToExit": "Tap the back button again to exit the app!",
   "gameRooms": "Game Rooms",
   "credits": "Credits",
