@@ -32,7 +32,11 @@ class _GameRoomScreenState extends State<GameRoomScreen> {
         _lookingForPlayer = false;
         _winner = chairs[0];
       }
-      setState(() {});
+
+      try {
+        setState(() {});
+      } catch (_) {}
+
       chairIdx += difference;
       difference++;
       chairIdx %= chairs.length;

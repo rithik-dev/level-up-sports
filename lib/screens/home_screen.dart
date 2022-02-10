@@ -95,24 +95,36 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildGameRoomsView(BuildContext context) {
-    return ListView(
-      children: [
-        _buildGameRoom(
-          title: L10n.dictionary.intPlayers('200'),
-          imageUrl:
-              'https://images.unsplash.com/photo-1586227740560-8cf2732c1531?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1561&q=80',
+    return Material(
+      color: const Color(0xFF181818),
+      clipBehavior: Clip.hardEdge,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(25),
         ),
-        _buildGameRoom(
-          title: L10n.dictionary.intPlayers('100'),
-          imageUrl:
-              'https://images.unsplash.com/photo-1524758631624-e2822e304c36?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-        ),
-        _buildGameRoom(
-          title: L10n.dictionary.intPlayers('50'),
-          imageUrl:
-              'https://images.unsplash.com/photo-1644333192086-60154e540a11?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80',
-        ),
-      ],
+      ),
+      child: ListView(
+        padding: const EdgeInsets.all(25),
+        children: [
+          _buildGameRoom(
+            title: L10n.dictionary.intPlayers('200'),
+            imageUrl:
+                'https://images.unsplash.com/photo-1586227740560-8cf2732c1531?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1561&q=80',
+          ),
+          const Divider(),
+          _buildGameRoom(
+            title: L10n.dictionary.intPlayers('100'),
+            imageUrl:
+                'https://images.unsplash.com/photo-1524758631624-e2822e304c36?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+          ),
+          const Divider(),
+          _buildGameRoom(
+            title: L10n.dictionary.intPlayers('50'),
+            imageUrl:
+                'https://images.unsplash.com/photo-1644333192086-60154e540a11?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80',
+          ),
+        ],
+      ),
     );
   }
 
