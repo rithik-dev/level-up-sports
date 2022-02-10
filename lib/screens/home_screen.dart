@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:level_up_sports/l10n/l10n.dart';
 import 'package:level_up_sports/screens/game_room_screen.dart';
 import 'package:level_up_sports/widgets/custom_app_bar.dart';
+import 'package:level_up_sports/widgets/custom_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   static const id = 'HomeScreen';
@@ -28,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: const CustomAppBar(),
+        endDrawer: const CustomDrawer(),
         body: DoubleBackToCloseApp(
           snackBar: SnackBar(
             content: Text(L10n.dictionary.tapBackButtonAgainToExit),
@@ -96,17 +98,17 @@ class _HomeScreenState extends State<HomeScreen> {
     return ListView(
       children: [
         _buildGameRoom(
-          title: '200 Players',
+          title: L10n.dictionary.intPlayers('200'),
           imageUrl:
               'https://images.unsplash.com/photo-1586227740560-8cf2732c1531?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1561&q=80',
         ),
         _buildGameRoom(
-          title: '100 Players',
+          title: L10n.dictionary.intPlayers('100'),
           imageUrl:
               'https://images.unsplash.com/photo-1524758631624-e2822e304c36?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
         ),
         _buildGameRoom(
-          title: '50 Players',
+          title: L10n.dictionary.intPlayers('50'),
           imageUrl:
               'https://images.unsplash.com/photo-1644333192086-60154e540a11?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80',
         ),

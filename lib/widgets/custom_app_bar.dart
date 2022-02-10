@@ -1,11 +1,27 @@
 import 'package:flutter/material.dart';
 
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   static const id = 'CustomAppBar';
 
   const CustomAppBar({
     Key? key,
   }) : super(key: key);
+
+  @override
+  Size get preferredSize => const Size.fromHeight(100);
+
+  @override
+  State<CustomAppBar> createState() => _CustomAppBarState();
+}
+
+class _CustomAppBarState extends State<CustomAppBar> {
+  late final ScaffoldState scaffoldState;
+
+  @override
+  void initState() {
+    scaffoldState = context.findRootAncestorStateOfType<ScaffoldState>()!;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,14 +35,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         height: 50,
       ),
       actions: [
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.menu),
-        ),
+        if (scaffoldState.hasEndDrawer)
+          IconButton(
+            onPressed: scaffoldState.openEndDrawer,
+            icon: const Icon(Icons.menu),
+          ),
       ],
     );
   }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(100);
 }

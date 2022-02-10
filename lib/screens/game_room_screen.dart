@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:level_up_sports/l10n/l10n.dart';
 import 'package:level_up_sports/widgets/custom_app_bar.dart';
+import 'package:level_up_sports/widgets/custom_drawer.dart';
 
 class GameRoomScreen extends StatefulWidget {
   static const id = 'GameRoomScreen';
@@ -30,7 +31,6 @@ class _GameRoomScreenState extends State<GameRoomScreen> {
       if (chairs.length == 1) {
         _lookingForPlayer = false;
         _winner = chairs[0];
-        // showSnackBar(context, text: L10n.dictionary.winnerIs('$_winner'));
       }
       setState(() {});
       chairIdx += difference;
@@ -47,6 +47,7 @@ class _GameRoomScreenState extends State<GameRoomScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: const CustomAppBar(),
+        endDrawer: const CustomDrawer(),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
