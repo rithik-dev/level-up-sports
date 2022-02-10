@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:level_up_sports/screens/home_screen.dart';
-import 'package:level_up_sports/widgets/custom_loader.dart';
 
 class SplashScreen extends StatefulWidget {
   static const id = 'SplashScreen';
@@ -27,15 +26,11 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(50),
-              child: Image.asset('assets/images/logo.png'),
-            ),
-            const CustomLoader(),
-          ],
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(125),
+            child: Image.asset('assets/images/logo.png'),
+          ),
         ),
       ),
     );

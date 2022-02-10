@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:level_up_sports/l10n/l10n.dart';
-import 'package:level_up_sports/utils/helpers.dart';
+import 'package:level_up_sports/widgets/custom_app_bar.dart';
 
 class GameRoomScreen extends StatefulWidget {
   static const id = 'GameRoomScreen';
@@ -13,27 +13,26 @@ class GameRoomScreen extends StatefulWidget {
   State<GameRoomScreen> createState() => _GameRoomScreenState();
 }
 
-class _GameRoomScreenState extends State<GameRoomScreen>
-    with SingleTickerProviderStateMixin {
+class _GameRoomScreenState extends State<GameRoomScreen> {
+  bool _lookingForPlayer = false;
+  int? _winner;
 
-  int? winner;
-  int? removed;
+  static const _chairsLen = 100;
 
-  final chairs = List.generate(100, (idx) => idx + 1);
+  final chairs = List.generate(_chairsLen, (idx) => idx + 1);
 
-  Stream<int> _getRemovedPlayers() async* {
+  void _removePlayers() async {
     int chairIdx = 0;
     int difference = 1;
+    setState(() => _lookingForPlayer = true);
     while (chairs.length > 1) {
-      final removed = chairs.removeAt(chairIdx);
-      yield removed;
+      chairs.removeAt(chairIdx);
       if (chairs.length == 1) {
-        _controller.reset();
-        setState(() => winner = chairs[0]);
-        showSnackBar(context, text: L10n.dictionary.winnerIs('$winner'));
-      } else {
-        _controller.forward(from: 0);
+        _lookingForPlayer = false;
+        _winner = chairs[0];
+        // showSnackBar(context, text: L10n.dictionary.winnerIs('$_winner'));
       }
+      setState(() {});
       chairIdx += difference;
       difference++;
       chairIdx %= chairs.length;
@@ -43,61 +42,85 @@ class _GameRoomScreenState extends State<GameRoomScreen>
 
   static const _duration = Duration(milliseconds: 250);
 
-  late final AnimationController _controller;
-  late final Animation<double> _slideAnimation;
-  late final Animation<double> _opacityAnimation;
-
-  @override
-  void initState() {
-    _controller = AnimationController(vsync: this, duration: _duration);
-
-    _slideAnimation = Tween<double>(begin: 0, end: 100).animate(_controller);
-    _opacityAnimation = Tween<double>(begin: 1, end: 0).animate(_controller);
-
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: const CustomAppBar(),
         body: Center(
-          child: winner == null
-              ? StreamBuilder<int>(
-                  stream: _getRemovedPlayers(),
-                  builder: (context, snapshot) {
-                    return AnimatedBuilder(
-                      animation: _controller,
-                      builder: (context, _) => Opacity(
-                        opacity: _opacityAnimation.value,
-                        child: _buildCard('${snapshot.data}'),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.all(25),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 10,
+                  mainAxisSpacing: 2.5,
+                  crossAxisSpacing: 2.5,
+                ),
+                itemBuilder: (_, index) => _buildCard(index),
+                itemCount: _chairsLen,
+              ),
+              if (_lookingForPlayer)
+                const SizedBox.shrink()
+              else if (_winner == null)
+                TextButton(
+                  onPressed: _removePlayers,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.play_arrow, color: Colors.white),
+                      const SizedBox(width: 5),
+                      Text(
+                        L10n.dictionary.play,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
                       ),
-                    );
-                  },
+                    ],
+                  ),
                 )
-              : _buildCard('$winner', isWinner: true),
+              else
+                Column(
+                  children: [
+                    Text(
+                      L10n.dictionary.winner,
+                      style: const TextStyle(fontSize: 30),
+                    ),
+                    const SizedBox(height: 5),
+                    SizedBox(
+                      height: 75,
+                      width: 75,
+                      child: _buildCard(_winner! - 1, padding: 25),
+                    ),
+                  ],
+                ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildCard(String numberText, {bool isWinner = false}) {
-    return Padding(
-      padding: EdgeInsets.only(left: _slideAnimation.value),
-      child: Container(
-        alignment: Alignment.center,
-        width: 150 * (isWinner ? 1.5 : 1),
-        height: 300 * (isWinner ? 1.5 : 1),
-        decoration: BoxDecoration(
-          color: isWinner ? Colors.black : Colors.red,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Text(
-          numberText,
-          style: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            color: isWinner ? Colors.amberAccent : Colors.white,
+  Widget _buildCard(int index, {double? padding}) {
+    return Card(
+      margin: EdgeInsets.zero,
+      color: (_winner == null || _winner == index + 1)
+          ? null
+          : Theme.of(context).cardColor.withOpacity(0.25),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.zero,
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(padding ?? (index == 99 ? 5 : 7.5)),
+        child: FittedBox(
+          child: Center(
+            child: Text(
+              chairs.contains(index + 1) ? '${index + 1}' : '',
+            ),
           ),
         ),
       ),
